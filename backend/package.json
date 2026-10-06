@@ -1,0 +1,41 @@
+{
+  "name": "orbit-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Orbit API — Express + MongoDB. Reuses the frontend's pure scheduling engine.",
+  "type": "module",
+  "main": "dist/server.mjs",
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "dev": "node build.mjs --watch",
+    "build": "node build.mjs",
+    "start": "node dist/server.mjs",
+    "typecheck": "tsc --noEmit -p .",
+    "build:all": "npm --prefix ../frontend run build && node build.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "bcryptjs": "^2.4.3",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.0",
+    "morgan": "^1.10.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.16.0",
+    "esbuild": "^0.24.0",
+    "typescript": "~5.6.3"
+  }
+}

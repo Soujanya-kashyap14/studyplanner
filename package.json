@@ -1,0 +1,13 @@
+{
+  "name": "orbit",
+  "private": true,
+  "description": "Orbit \u00e2\u20ac\u201d study in your own universe. React frontend + Express/MongoDB backend.",
+  "scripts": {
+    "install:all": "npm --prefix frontend install && npm --prefix backend install",
+    "dev": "node dev.mjs",
+    "dev:api": "npm --prefix backend run dev",
+    "dev:web": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "start": "npm --prefix backend start"
+  }
+}

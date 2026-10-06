@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   ORBIT DESIGN TOKENS
+   Two hand-tuned themes (not inversions of each other):
+   - Midnight: deep navy night sky with aurora accents
+   - Dawn: warm sunrise paper with lavender haze
+   All accent tokens used as text meet WCAG AA (>= 4.5:1) on their
+   theme's surfaces. Values are "R G B" triplets for Tailwind alpha.
+   ===================================================================== */
+@layer base {
+  :root,
+  [data-theme='midnight'] {
+    color-scheme: dark;
+    --bg-0: 11 16 32; /* #0B1020 */
+    --bg-1: 20 27 52; /* #141B34 */
+    --ink: 234 237 255;
+    --ink-muted: 168 176 210;
+    --ink-faint: 135 144 184;
+    --line: 255 255 255;
+    --line-alpha: 0.09;
+    --glass: 255 255 255;
+    --glass-alpha: 0.045;
+    --glass-hi: 255 255 255;
+    --shadow: 0 0 0;
+    --violet: 167 155 255;
+    --cyan: 91 224 247;
+    --amber: 255 184 77;
+    --rose: 255 122 144;
+    --mint: 94 230 168;
+    --on-accent: 11 16 32;
+    --sky-1: 13 18 40;
+    --sky-2: 24 22 62;
+    --sky-3: 34 28 84;
+    --star: 255 255 255;
+    --aurora-a: 139 124 255;
+    --aurora-b: 56 217 245;
+  }
+
+  [data-theme='dawn'] {
+    color-scheme: light;
+    --bg-0: 255 247 239; /* warm paper */
+    --bg-1: 241 236 255; /* lavender haze */
+    --ink: 28 26 54;
+    --ink-muted: 75 72 104;
+    --ink-faint: 102 99 134;
+    --line: 28 26 54;
+    --line-alpha: 0.1;
+    --glass: 255 255 255;
+    --glass-alpha: 0.62;
+    --glass-hi: 255 255 255;
+    --shadow: 76 56 120;
+    --violet: 91 71 224;
+    --cyan: 11 114 133;
+    --amber: 180 83 9;
+    --rose: 190 18 60;
+    --mint: 4 120 87;
+    --on-accent: 255 255 255;
+    /* The constellation sky at dawn: deep indigo melting into peach */
+    --sky-1: 46 38 102;
+    --sky-2: 120 72 140;
+    --sky-3: 232 150 128;
+    --star: 255 250 240;
+    --aurora-a: 255 170 120;
+    --aurora-b: 160 140 255;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans text-ink;
+    min-height: 100dvh;
+    background-color: rgb(var(--bg-0));
+    background-image: linear-gradient(160deg, rgb(var(--bg-0)) 0%, rgb(var(--bg-1)) 100%);
+    background-attachment: fixed;
+    transition: background-color 400ms ease, color 400ms ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Visible, on-brand focus ring for keyboard users only */
+  :focus-visible {
+    outline: 2px solid rgb(var(--cyan));
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+
+  ::selection {
+    background: rgb(var(--violet) / 0.35);
+  }
+
+  /* Slim themed scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line) / 0.18) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgb(var(--line) / 0.18);
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  /* Glassmorphism surface: soft blur, 1px translucent border, hover glow */
+  .glass {
+    background: rgb(var(--glass) / var(--glass-alpha));
+    border: 1px solid rgb(var(--line) / var(--line-alpha));
+    @apply rounded-3xl shadow-glass backdrop-blur-glass;
+  }
+  .glass-strong {
+    background: rgb(var(--bg-1) / 0.86);
+    border: 1px solid rgb(var(--line) / calc(var(--line-alpha) + 0.04));
+    @apply rounded-3xl shadow-glass backdrop-blur-glass;
+  }
+  .glass-hover {
+    transition: border-color 200ms ease, box-shadow 250ms ease, transform 200ms ease;
+  }
+  .glass-hover:hover {
+    border-color: rgb(var(--violet) / 0.35);
+    box-shadow: 0 1px 0 0 rgb(var(--glass-hi) / 0.06) inset, 0 18px 50px -20px rgb(var(--violet) / 0.45);
+  }
+
+  .hairline {
+    border-color: rgb(var(--line) / var(--line-alpha));
+  }
+
+  .eyebrow {
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--line) / 0.06) 0px,
+      rgb(var(--line) / 0.13) 120px,
+      rgb(var(--line) / 0.06) 240px
+    );
+    background-size: 800px 100%;
+    @apply animate-shimmer rounded-xl;
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, rgb(var(--violet)), rgb(var(--cyan)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sky-panel {
+    background:
+      radial-gradient(120% 90% at 85% 0%, rgb(var(--aurora-a) / 0.28), transparent 55%),
+      radial-gradient(90% 80% at 0% 100%, rgb(var(--aurora-b) / 0.2), transparent 60%),
+      linear-gradient(170deg, rgb(var(--sky-1)), rgb(var(--sky-2)) 60%, rgb(var(--sky-3)));
+  }
+
+  .sr-only-focusable:not(:focus) {
+    @apply sr-only;
+  }
+}
+
+/* Honor reduced motion: OS setting OR the in-app toggle (html.reduce-motion) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
